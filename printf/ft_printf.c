@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sizgi <sizgi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:20:39 by sizgi             #+#    #+#             */
-/*   Updated: 2024/10/09 15:56:09 by sizgi            ###   ########.fr       */
+/*   Updated: 2024/10/09 16:38:41 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_printf(const char *format, ...)
 	va_end(ap);
 	return (save);
 }
-#include <limits.h>
+/* #include <limits.h>
 int main()
 {
 	int  a = 0;
@@ -84,7 +84,7 @@ int main()
 	//b += printf("%X%X%d%i%x\n",0,INT_MIN,2,3,INT_MAX);
 	printf("\nEnd\n");
 	printf("Result : ft: %d / std: %d",a,b);
-}
+} */
  /* int	main(void)
 {
 	a += ft_printf("%d %d %d %p %d %d %i %i %X %d %x \n", 76217847, 1254, 1234568, &s, 1235468, 24568, 100000, 4358725, 100000, 100000, 100000);
