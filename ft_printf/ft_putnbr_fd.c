@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sizgi <sizgi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 18:47:11 by sizgi             #+#    #+#             */
-/*   Updated: 2024/10/09 15:36:03 by sizgi            ###   ########.fr       */
+/*   Updated: 2024/10/10 10:24:38 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 int	ft_putnbr_fd(int n)
 {
@@ -34,7 +34,6 @@ int	ft_putnbr_fd(int n)
 		i += ft_putnbr_fd((n / 10));
 	}
 	nbr = n % 10 + '0';
-	
 	write(1, &nbr, 1);
 	i++;
 	return (i);

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sizgi <sizgi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:20:39 by sizgi             #+#    #+#             */
-/*   Updated: 2024/10/09 15:56:09 by sizgi            ###   ########.fr       */
+/*   Updated: 2024/10/10 10:25:06 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 #include <stdarg.h>
 
 static int	ft_the_decision(va_list ap, char c)
@@ -27,7 +27,7 @@ static int	ft_the_decision(va_list ap, char c)
 	else if (c == 'i' || c == 'd')
 		i = ft_putnbr_fd(va_arg(ap, int));
 	else if (c == 'u')
-		i = ft_putnbr_fd(va_arg(ap, unsigned int));
+		i = ft_unsigned_int(va_arg(ap, unsigned int));
 	else if (c == 'x')
 		i = ft_putnbr_hexa_lower(va_arg(ap, unsigned int));
 	else if (c == 'X')
@@ -62,7 +62,7 @@ int	ft_printf(const char *format, ...)
 	va_end(ap);
 	return (save);
 }
-#include <limits.h>
+/* #include <limits.h>
 int main()
 {
 	int  a = 0;
@@ -84,7 +84,7 @@ int main()
 	//b += printf("%X%X%d%i%x\n",0,INT_MIN,2,3,INT_MAX);
 	printf("\nEnd\n");
 	printf("Result : ft: %d / std: %d",a,b);
-}
+} */
  /* int	main(void)
 {
 	a += ft_printf("%d %d %d %p %d %d %i %i %X %d %x \n", 76217847, 1254, 1234568, &s, 1235468, 24568, 100000, 4358725, 100000, 100000, 100000);
