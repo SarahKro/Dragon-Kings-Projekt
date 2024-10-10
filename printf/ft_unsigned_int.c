@@ -1,29 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_unsigned_int.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/09 16:47:54 by codespace         #+#    #+#             */
-/*   Updated: 2024/10/10 10:16:29 by codespace        ###   ########.fr       */
+/*   Created: 2024/10/10 10:15:41 by codespace         #+#    #+#             */
+/*   Updated: 2024/10/10 10:15:43 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
+int	ft_unsigned_int(unsigned int n)
+{
+	int	nbr;
+	int i;
 
-int	ft_putchar_fd(char c);
-int	ft_putstr_fd(char *s);
-int	ft_putnbr_fd(int n);
-int	ft_printf(const char *format, ...);
-int	ft_putnbr_hexa_lower(unsigned int n);
-int	ft_putnbr_hexa_Upper(unsigned int n);
-int	ft_putnbr_pointer_adress(size_t n);
-int ft_unsigned_int(unsigned int n);
+	i = 0;
+    
+	if (n >= 10)
+	{
+		i += ft_unsigned_int((n / 10));
+	}
+	nbr = n % 10 + '0';
+	
+	write(1, &nbr, 1);
+	i++;
+	return (i);
+}
 
-#endif
+/* #include <stdio.h>
+
+int main()
+{
+    ft_unsigned_int(2147483648);
+    printf("\n%u \n", 2147483647);
+    return 0;
+} */

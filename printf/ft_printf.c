@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:20:39 by sizgi             #+#    #+#             */
-/*   Updated: 2024/10/09 16:47:00 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/10 10:15:05 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	ft_the_decision(va_list ap, char c)
 	else if (c == 'i' || c == 'd')
 		i = ft_putnbr_fd(va_arg(ap, int));
 	else if (c == 'u')
-		i = ft_putnbr_fd(va_arg(ap, unsigned int));
+		i = ft_unsigned_int(va_arg(ap, unsigned int));
 	else if (c == 'x')
 		i = ft_putnbr_hexa_lower(va_arg(ap, unsigned int));
 	else if (c == 'X')
