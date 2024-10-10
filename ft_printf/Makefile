@@ -6,12 +6,12 @@
 #    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/10 10:26:25 by codespace         #+#    #+#              #
-#    Updated: 2024/10/10 10:26:28 by codespace        ###   ########.fr        #
+#    Updated: 2024/10/10 11:01:14 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC = ft_printf.c ft_putchar_fd.c ft_putnbr_fd.c ft_putnbr_hexa_lower.c \
-ft_putnbr_hexa_Upper.c ft_putnbr_pointer_adress.c ft_putstr_fd.c
+ft_putnbr_hexa_Upper.c ft_putnbr_pointer_adress.c ft_putstr_fd.c ft_unsigned_int.c
 
 OBJ = $(SRC:.c=.o)
 
