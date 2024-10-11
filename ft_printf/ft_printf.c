@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:20:39 by sizgi             #+#    #+#             */
-/*   Updated: 2024/10/10 14:40:16 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/10 15:56:54 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static int	ft_the_decision(va_list ap, char c)
 	if (c == 'c')
 		i = ft_putchar_fd(va_arg(ap, int));
 	else if (c == 's')
-		i = ft_putstr_fd(va_arg(ap, char *));
+			i = ft_putstr_fd(va_arg(ap, char *));
 	else if (c == 'p')
-		i = ft_putnbr_pointer_adress(va_arg(ap, size_t));
+			i = ft_putnbr_pointer_adress(va_arg(ap, size_t));
 	else if (c == 'i' || c == 'd')
 		i = ft_putnbr_fd(va_arg(ap, int));
 	else if (c == 'u')
@@ -62,30 +62,38 @@ int	ft_printf(const char *format, ...)
 	va_end(ap);
 	return (save);
 }
-#include <limits.h>
+// #include <limits.h>
 int main()
 {
-	int  a = 0;
-	int b = 0;
-	// char c = 'a';
-	char *s = "hi there";
-	//int i = 0;
-	//int d = 100;
-	//int j = 2147483647;
-	//int k = 214748367;
-	printf("start Check\n");
-	printf("---------FT---------\n");
-	//printf(" NULL");
-	//a += ft_printf("%d %i %s", 5,INT_MIN,"hello world");
-	//a += ft_printf("%X%X%d%i%x\n",0,INT_MIN,2,3,INT_MAX);
-	a += ft_printf("%d %d %d %p %d %d %i %i %X %d %x \n", 76217847, 1254, 1234568, &s, 1235468, 24568, 100000, 4358725, 100000, 100000, 100000);
-	b += printf("%d %d %d %p %d %d %i %i %X %d %x \n", 76217847, 1254, 1234568, &s, 1235468, 24568, 100000, 4358725, 100000, 100000, 100000);
-	printf("\n---------STD---------\n");
-	//b += printf("%d %i %s", 5,INT_MIN,"hello world");
-	//b += printf("%X%X%d%i%x\n",0,INT_MIN,2,3,INT_MAX);
-	printf("\nEnd\n");
-	printf("Result : ft: %d / std: %d",a,b);
+	ft_printf("%d", 12356789123789);
 }
+// {
+// 	int  a = 0;
+// 	int b = 0;
+// 	// char c = 'a';
+// 	char *s = "hi there";
+// 	//int i = 0;
+// 	//int d = 100;
+// 	//int j = 2147483647;
+// 	//int k = 214748367;
+// 	printf("start Check\n");
+// 	printf("---------FT---------\n");
+// 	printf("NULL %p\n", NULL);
+// 	ft_printf("NULL %p\n", NULL);
+// 	//printf("%p %p\n", 0, 0);
+// 	printf("%p %p\n", 0, 0);
+// 	b +=printf("%s", NULL);
+// 	//ft_printf(" NULL %s NULL ", NULL);
+// 	//a += ft_printf("%d %i %s", 5,INT_MIN,"hello world");
+// 	//a += ft_printf("%X%X%d%i%x\n",0,INT_MIN,2,3,INT_MAX);
+// 	// a += ft_printf("%d %d %d %p %d %d %i %i %X %d %x \n", 76217847, 1254, 1234568, &s, 1235468, 24568, 100000, 4358725, 100000, 100000, 100000);
+// 	// b += printf("%d %d %d %p %d %d %i %i %X %d %x \n", 76217847, 1254, 1234568, &s, 1235468, 24568, 100000, 4358725, 100000, 100000, 100000);
+// 	printf("\n---------STD---------\n");
+// 	//b += printf("%d %i %s", 5,INT_MIN,"hello world");
+// 	//b += printf("%X%X%d%i%x\n",0,INT_MIN,2,3,INT_MAX);
+// 	printf("\nEnd\n");
+// 	printf("Result : ft: %d / std: %d\n",a,b);
+// }
  /* int	main(void)
 {
 	a += ft_printf("%d %d %d %p %d %d %i %i %X %d %x \n", 76217847, 1254, 1234568, &s, 1235468, 24568, 100000, 4358725, 100000, 100000, 100000);

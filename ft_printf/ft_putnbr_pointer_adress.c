@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 18:11:20 by sizgi             #+#    #+#             */
-/*   Updated: 2024/10/10 14:26:49 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/10 15:32:53 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	ft_putnbr_pointer_adress(size_t n)
 	int	save;
 
 	if (n == 0)
-    {
-        write(1, "0", 1);
-        return (1);
-    }
+	{
+		write(1,"(nil)", 5);
+		return(5);
+	}
 	i = 0;
 	while (n > 0)
 	{
