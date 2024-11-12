@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   6_get_next_line.c                                  :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sizgi <sizgi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:54:44 by sizgi             #+#    #+#             */
-/*   Updated: 2024/11/12 15:22:54 by sizgi            ###   ########.fr       */
+/*   Updated: 2024/11/12 15:55:50 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Get_next_line.h"
+#include "get_next_line.h"
 
 char	*ft_strjoin(char const *s1, char const *s2, int index, int size)
 {
