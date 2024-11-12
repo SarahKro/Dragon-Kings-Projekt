@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 14:20:39 by sizgi             #+#    #+#             */
-/*   Updated: 2024/10/10 15:56:54 by codespace        ###   ########.fr       */
+/*   Updated: 2024/10/11 11:33:12 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	ft_printf(const char *format, ...)
 
 	i = 0;
 	save = 0;
+	if(format == NULL)
+		return(0);
 	va_start(ap, format);
 	while (format[i] != '\0')
 	{
@@ -63,10 +65,10 @@ int	ft_printf(const char *format, ...)
 	return (save);
 }
 // #include <limits.h>
-int main()
-{
-	ft_printf("%d", 12356789123789);
-}
+// int main()
+// {
+// 	ft_printf("%d", 12356789123789);
+// }
 // {
 // 	int  a = 0;
 // 	int b = 0;
