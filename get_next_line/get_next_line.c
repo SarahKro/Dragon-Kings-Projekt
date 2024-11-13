@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:54:44 by sizgi             #+#    #+#             */
-/*   Updated: 2024/11/13 16:17:40 by codespace        ###   ########.fr       */
+/*   Updated: 2024/11/13 16:19:54 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*get_next_line(int fd)
 {
 	int bytes_to_read;
 	char *small_buffer;
-	char *line;
+	char *line = "";
 	char *temp;
     int i;
 	int j;
@@ -112,37 +112,37 @@ char	*get_next_line(int fd)
     	}
     return (NULL);	//size_t read(int fildes, void *buf, size_t nbyte);
 }
-int	main(void)
-{
-	int fd;
-	char *text_line;
-	int count;
+// int	main(void)
+// {
+// 	int fd;
+// 	char *text_line;
+// 	int count;
 
-	count = 0;
-	fd = open("exampuru.txt", O_RDONLY); // FILE options, open("path/to/file",
-			// O_WRONLY | O_RONLY) flags can be combined
-	//     O_RONLY, O_WONLY, O_RDWR MANDATORY FLAGS.
-	if (fd == -1)
-	{
-		printf("no file");
-		return (0);
-	}
-	// while (1)
-	// {
-	// 	text_line = get_next_line(fd);
-	// 	// printf("%s", text_line);
-	// 	if (text_line == NULL)
-	// 		return (0);
-	// 	count++;
-	// 	printf("%s", text_line);
-	// 	free(text_line);
-	// 	text_line = NULL;
-	// }
-	while((text_line = get_next_line(fd)) != NULL)
-	{
-		printf("Line %d: %s", ++count, text_line);
-        free(text_line);
-	}
-	close(fd);
-	return (0);
-}
+// 	count = 0;
+// 	fd = open("exampuru.txt", O_RDONLY); // FILE options, open("path/to/file",
+// 			// O_WRONLY | O_RONLY) flags can be combined
+// 	//     O_RONLY, O_WONLY, O_RDWR MANDATORY FLAGS.
+// 	if (fd == -1)
+// 	{
+// 		printf("no file");
+// 		return (0);
+// 	}
+// 	// while (1)
+// 	// {
+// 	// 	text_line = get_next_line(fd);
+// 	// 	// printf("%s", text_line);
+// 	// 	if (text_line == NULL)
+// 	// 		return (0);
+// 	// 	count++;
+// 	// 	printf("%s", text_line);
+// 	// 	free(text_line);
+// 	// 	text_line = NULL;
+// 	// }
+// 	while((text_line = get_next_line(fd)) != NULL)
+// 	{
+// 		printf("Line %d: %s", ++count, text_line);
+//         free(text_line);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
