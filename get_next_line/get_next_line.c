@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:54:44 by sizgi             #+#    #+#             */
-/*   Updated: 2024/11/12 15:55:50 by codespace        ###   ########.fr       */
+/*   Updated: 2024/11/13 16:17:40 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ char	*get_next_line(int fd)
 	int bytes_to_read;
 	char *small_buffer;
 	char *line;
-    char *temp;
-	int i;
+	char *temp;
+    int i;
 	int j;
     static char *remain;
 
@@ -68,11 +68,10 @@ char	*get_next_line(int fd)
 		j = ft_strlen(remain);
 		if(i >= 0)
 		{
-			line = ft_strjoin(line, remain, 0, i+1);
 			temp = remain;
-			remain = ft_strjoin(NULL,remain, i+1, j);
+			line = ft_strjoin(line, remain, 0, i+1);
 			free(temp);
-			free(small_buffer);
+			remain = ft_strjoin(NULL,remain, i+1, j);
 			return(line);
 		}
 	}
@@ -80,11 +79,12 @@ char	*get_next_line(int fd)
 	while(bytes_to_read > 0)
 	{
 		bytes_to_read = read(fd, small_buffer, BUFFER_SIZE);
-		if (bytes_to_read < 0)
+		if (bytes_to_read <= 0)
         {
             free(small_buffer);
             return (NULL);
         }
+		small_buffer[bytes_to_read] = '\0';
         i = new_line_check(small_buffer);
     	if(i < 0)
 		{
@@ -97,20 +97,21 @@ char	*get_next_line(int fd)
 			line = ft_strjoin(remain, small_buffer, 0, (i+1));
 			free(remain);
 			remain = NULL;
-			remain = ft_strjoin(remain,small_buffer, i+1, bytes_to_read);
+			if(i+1 < bytes_to_read)
+				remain = ft_strjoin(remain,small_buffer, i+1, bytes_to_read);
 			free(small_buffer);
 			return(line);
 		}
 	}
-	if(remain)
-		{
-			free(remain);
+		free(small_buffer);
+    	if (remain && *remain)
+    	{
+			line = remain;
 			remain = NULL;
-		}
-	free(small_buffer);
-	return(NULL);
+			return (line);
+    	}
+    return (NULL);	//size_t read(int fildes, void *buf, size_t nbyte);
 }
-
 int	main(void)
 {
 	int fd;
@@ -126,16 +127,22 @@ int	main(void)
 		printf("no file");
 		return (0);
 	}
-
+	// while (1)
+	// {
+	// 	text_line = get_next_line(fd);
+	// 	// printf("%s", text_line);
+	// 	if (text_line == NULL)
+	// 		return (0);
+	// 	count++;
+	// 	printf("%s", text_line);
+	// 	free(text_line);
+	// 	text_line = NULL;
+	// }
 	while((text_line = get_next_line(fd)) != NULL)
 	{
 		printf("Line %d: %s", ++count, text_line);
         free(text_line);
 	}
-	// text_line = get_next_line(fd);
-	// printf("Line %d: %s", ++count, text_line);
-    // free(text_line);
-
 	close(fd);
 	return (0);
 }
