@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:54:44 by sizgi             #+#    #+#             */
-/*   Updated: 2024/11/14 16:18:59 by codespace        ###   ########.fr       */
+/*   Updated: 2024/11/14 16:22:11 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int new_line_check(char *small_buffer)
     }
     return(-1);
 }
-char	*ft_get_next_line(int fd)
+char	*get_next_line(int fd)
 {
 	int bytes_to_read;
 	char *small_buffer;
@@ -131,26 +131,26 @@ char	*ft_get_next_line(int fd)
     	// }
     return (NULL);	//size_t read(int fildes, void *buf, size_t nbyte);
 }
-int	main(void)
-{
-	int fd;
-	char *text_line;
-	int count;
+// int	main(void)
+// {
+// 	int fd;
+// 	char *text_line;
+// 	int count;
 
-	count = 0;
-	fd = open("1.txt", O_RDONLY); // FILE options, open("path/to/file",
-			// O_WRONLY | O_RONLY) flags can be combined
-	//     O_RONLY, O_WONLY, O_RDWR MANDATORY FLAGS.
-	if (fd == -1)
-	{
-		printf("no file");
-		return (0);
-	}
-	while((text_line = ft_get_next_line(fd)) != NULL)
-	{
-		printf("Line %d: %s", ++count, text_line);
-        free(text_line);
-	}
-	close(fd);
-	return (0);
-}
+// 	count = 0;
+// 	fd = open("1.txt", O_RDONLY); // FILE options, open("path/to/file",
+// 			// O_WRONLY | O_RONLY) flags can be combined
+// 	//     O_RONLY, O_WONLY, O_RDWR MANDATORY FLAGS.
+// 	if (fd == -1)
+// 	{
+// 		printf("no file");
+// 		return (0);
+// 	}
+// 	while((text_line = ft_get_next_line(fd)) != NULL)
+// 	{
+// 		printf("Line %d: %s", ++count, text_line);
+//         free(text_line);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
