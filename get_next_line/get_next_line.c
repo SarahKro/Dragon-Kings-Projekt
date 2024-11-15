@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:54:44 by sizgi             #+#    #+#             */
-/*   Updated: 2024/11/15 16:15:09 by codespace        ###   ########.fr       */
+/*   Updated: 2024/11/15 16:21:34 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int new_line_check(char *small_buffer)
     }
     return(-1);
 }
-char	*ft_get_next_line(int fd)
+char	*get_next_line(int fd)
 {
 	int bytes_to_read;
 	char *small_buffer;
