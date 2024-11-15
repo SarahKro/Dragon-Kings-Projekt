@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sizgi <sizgi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:54:44 by sizgi             #+#    #+#             */
-/*   Updated: 2024/11/15 17:01:22 by sizgi            ###   ########.fr       */
+/*   Updated: 2024/11/15 16:15:09 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ char	*ft_get_next_line(int fd)
 			free(remain);
 			remain = NULL;
 		}
-		//printf("remain%d:|%s|\n",r++ , remain);
 	}
 	bytes_to_read = 1;
 	while(bytes_to_read > 0)

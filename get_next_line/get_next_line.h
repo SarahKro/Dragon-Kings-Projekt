@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sizgi <sizgi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 12:24:30 by sizgi             #+#    #+#             */
-/*   Updated: 2024/11/14 17:27:52 by sizgi            ###   ########.fr       */
+/*   Updated: 2024/11/15 16:13:44 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #include <stdio.h>
 
 char	*ft_strjoin(char const *s1, char const *s2, int size, int index);
-char	*get_next_line(int fd);
+char	*ft_get_next_line(int fd);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	ft_bzero(void *s, size_t n);
 char	*ft_strncpy(char *dest, char *src, unsigned int n);
