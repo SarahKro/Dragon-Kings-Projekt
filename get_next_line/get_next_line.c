@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: sizgi <sizgi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:54:44 by sizgi             #+#    #+#             */
-/*   Updated: 2024/11/15 16:21:34 by codespace        ###   ########.fr       */
+/*   Updated: 2024/11/15 19:39:22 by sizgi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,43 +34,67 @@ char	*ft_strjoin(char const *s1, char const *s2, int index, int size)
 	m[i] = '\0';
 	return (m);
 }
-int new_line_check(char *small_buffer)
+
+int	new_line_check(char *small_buffer)
 {
-    int i;
-    
-    i = 0;
-    while (small_buffer && small_buffer[i] != '\0')
-    {
-        if (small_buffer[i] == '\n')
-            return(i);
-        i++;
-    }
-    return(-1);
+	int	i;
+
+	i = 0;
+	while (small_buffer && small_buffer[i] != '\0')
+	{
+		if (small_buffer[i] == '\n')
+			return (i);
+		i++;
+	}
+	return (-1);
 }
+
 char	*get_next_line(int fd)
 {
-	int bytes_to_read;
-	char *small_buffer;
-	char *line = NULL;
-	char *temp;
-    int i;
-	int j;
-    static char *remain;
-	//static int r;
+	int			bytes_to_read;
+	char		*small_buffer;
+	char		*line;
+	char		*temp;
+	int			i;
+	int			j;
+	static char	*remain;
 
-	if(BUFFER_SIZE <= 0 || fd < 0)
-		return(NULL);
-	if(remain && (i = new_line_check(remain) > -1))
+	line = NULL;
+	if (BUFFER_SIZE <= 0 || fd < 0)
+		return (NULL);
+	i = new_line_check(remain);
+	if (remain && i > -1)
 	{
-		i = new_line_check(remain);
 		j = ft_strlen(remain);
 		line = ft_strjoin(NULL, remain, 0, i + 1);
-		if(j >= i + 1)
+		if(line == NULL)
+		{
+			free(line);
+			if(remain)
+			{
+				free(remain);
+				remain = NULL;
+			}
+			return(NULL);
+		}
+		if (j >= i + 1)
 		{
 			temp = remain;
-			remain = ft_strjoin(NULL, remain, i+1, j);
+			remain = ft_strjoin(NULL, remain, i + 1, j);
+			if(remain == NULL)
+			{
+				free(line);
+				if (temp)
+					free(temp);
+				if(remain)
+				{
+					free(remain);
+					remain = NULL;
+				}
+				return(NULL);
+			}
 			free(temp);
-			return(line);
+			return (line);
 		}
 		else
 		{
@@ -79,66 +103,125 @@ char	*get_next_line(int fd)
 		}
 	}
 	bytes_to_read = 1;
-	while(bytes_to_read > 0)
+	while (bytes_to_read > 0)
 	{
-		if(remain)
+		if (remain)
 		{
 			i = ft_strlen(remain);
-			if(i > 0)
+			if (i > 0)
+			{
 				line = ft_strjoin(line, remain, 0, i);
+				if(line == NULL)
+				{
+					free(line);
+					if (temp)
+						free(temp);
+					free(small_buffer);
+					if(remain)
+					{
+						free(remain);
+						remain = NULL;
+					}
+					return(NULL);
+				}
+			}
 			free(remain);
 			remain = NULL;
 		}
-		small_buffer = ft_calloc (BUFFER_SIZE + 1, sizeof(char));
-		if(!small_buffer)
-			return(NULL);
+		small_buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+		if (!small_buffer)
+			return (NULL);
 		bytes_to_read = read(fd, small_buffer, BUFFER_SIZE);
 		if (bytes_to_read <= 0)
-        {
-            free(small_buffer);
-            return (NULL);
-        }
-        i = new_line_check(small_buffer);
-    	if(i < 0)
+		{
+			free(small_buffer);
+			free(remain);
+			remain = NULL;
+			return (NULL);
+		}
+		i = new_line_check(small_buffer);
+		if (i < 0)
 		{
 			temp = line;
 			line = ft_strjoin(line, small_buffer, 0, bytes_to_read);
-			if(temp)
+			if(line == NULL)
+			{
+				free(line);
+				if (temp)
+					free(temp);
+				free(small_buffer);
+				if(remain)
+				{
+					free(remain);
+					remain = NULL;
+				}
+				return(NULL);
+			}
+			if (temp)
 				free(temp);
 			free(small_buffer);
 		}
 		else
 		{
 			temp = line;
-			line = ft_strjoin(line, small_buffer, 0, (i+1));
+			line = ft_strjoin(line, small_buffer, 0, (i + 1));
+			if(line == NULL)
+			{
+				free(line);
+				if (temp)
+					free(temp);
+				free(small_buffer);
+				if(remain)
+				{
+					free(remain);
+					remain = NULL;
+				}
+				return(NULL);
+			}
 			free(temp);
-			if(i+1 < bytes_to_read)
-				remain = ft_strjoin(remain, small_buffer, i+1, bytes_to_read);
+			if (i + 1 < bytes_to_read)
+			{
+				remain = ft_strjoin(remain, small_buffer, i + 1, bytes_to_read);
+				if(remain == NULL)
+				{
+					free(line);
+					if (temp)
+					free(temp);
+					free(small_buffer);
+					if(remain)
+					{
+						free(remain);
+						remain = NULL;
+					}
+					return(NULL);
+				}
+			}
 			free(small_buffer);
-			return(line);
+			return (line);
 		}
 	}
-    return (NULL);
+	return (NULL);
 }
+
 // int	main(void)
 // {
-// 	int fd;
-// 	char *text_line;
-// 	int count;
+// 	int		fd;
+// 	char	*text_line;
+// 	int		count;
 
 // 	count = 0;
-// 	fd = open("7", O_RDONLY); // FILE options, open("path/to/file",
-// 			// O_WRONLY | O_RONLY) flags can be combined
+// 	fd = open("3.txt", O_RDONLY); // FILE options, open("path/to/file",
+// 									// O_WRONLY | O_RONLY) flags can be combined
 // 	//     O_RONLY, O_WONLY, O_RDWR MANDATORY FLAGS.
 // 	if (fd == -1)
 // 	{
 // 		printf("no file");
 // 		return (0);
 // 	}
-// 	while((text_line = ft_get_next_line(fd)) != NULL)
+// 	while ((text_line = get_next_line(fd)) != NULL)
 // 	{
 // 		printf("Line %d: %s", ++count, text_line);
-//         free(text_line);
+// 		free(text_line);
 // 	}
 // 	close(fd);
 // 	return (0);
