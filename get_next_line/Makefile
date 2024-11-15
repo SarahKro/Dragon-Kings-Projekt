@@ -6,11 +6,11 @@
 #    By: sizgi <sizgi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/18 14:12:57 by sizgi             #+#    #+#              #
-#    Updated: 2024/11/03 16:15:29 by sizgi            ###   ########.fr        #
+#    Updated: 2024/11/14 17:27:45 by sizgi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = 6_get_next_line.c get_next_line_utils.c
+SRC = get_next_line.c get_next_line_utils.c
 
 OBJ = $(SRC:.c=.o)
 
