@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sizgi <sizgi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:54:44 by sizgi             #+#    #+#             */
-/*   Updated: 2024/11/15 19:39:22 by sizgi            ###   ########.fr       */
+/*   Updated: 2024/11/16 14:58:56 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,6 @@ char	*get_next_line(int fd)
 				if(line == NULL)
 				{
 					free(line);
-					if (temp)
-						free(temp);
 					free(small_buffer);
 					if(remain)
 					{
@@ -132,12 +130,17 @@ char	*get_next_line(int fd)
 		if (!small_buffer)
 			return (NULL);
 		bytes_to_read = read(fd, small_buffer, BUFFER_SIZE);
-		if (bytes_to_read <= 0)
+		if (bytes_to_read < 0)
 		{
 			free(small_buffer);
 			free(remain);
 			remain = NULL;
 			return (NULL);
+		}
+		if ((bytes_to_read == 0) && line)
+		{
+			free(small_buffer);
+			return(line);
 		}
 		i = new_line_check(small_buffer);
 		if (i < 0)
@@ -185,8 +188,6 @@ char	*get_next_line(int fd)
 				if(remain == NULL)
 				{
 					free(line);
-					if (temp)
-					free(temp);
 					free(small_buffer);
 					if(remain)
 					{
@@ -200,29 +201,31 @@ char	*get_next_line(int fd)
 			return (line);
 		}
 	}
+	free(line);
+	// free(small_buffer);
 	return (NULL);
 }
 
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*text_line;
-// 	int		count;
+int	main(void)
+{
+	int		fd;
+	char	*text_line;
+	int		count;
 
-// 	count = 0;
-// 	fd = open("3.txt", O_RDONLY); // FILE options, open("path/to/file",
-// 									// O_WRONLY | O_RONLY) flags can be combined
-// 	//     O_RONLY, O_WONLY, O_RDWR MANDATORY FLAGS.
-// 	if (fd == -1)
-// 	{
-// 		printf("no file");
-// 		return (0);
-// 	}
-// 	while ((text_line = get_next_line(fd)) != NULL)
-// 	{
-// 		printf("Line %d: %s", ++count, text_line);
-// 		free(text_line);
-// 	}
-// 	close(fd);
-// 	return (0);
-// }
+	count = 0;
+	fd = open("7", O_RDONLY); // FILE options, open("path/to/file",
+									// O_WRONLY | O_RONLY) flags can be combined
+	//     O_RONLY, O_WONLY, O_RDWR MANDATORY FLAGS.
+	if (fd == -1)
+	{
+		printf("no file");
+		return (0);
+	}
+	while ((text_line = get_next_line(fd)) != NULL)
+	{
+		printf("Line %d: %s", ++count, text_line);
+		free(text_line);
+	}
+	close(fd);
+	return (0);
+}

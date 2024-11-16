@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sizgi <sizgi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:06:07 by sizgi             #+#    #+#             */
-/*   Updated: 2024/11/14 17:29:30 by sizgi            ###   ########.fr       */
+/*   Updated: 2024/11/15 19:45:51 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ void	ft_bzero(void *s, size_t n)
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*m;
-	size_t	sum;
+	size_t	product;
 
 	if (nmemb != 0 && ((nmemb * size) / nmemb != size))
 		return (NULL);
-	sum = nmemb * size;
-	m = malloc(sum);
+	product = nmemb * size;
+	m = malloc(product);
 	if (!m)
 		return (NULL);
-	ft_bzero(m, sum);
+	ft_bzero(m, product);
 	return (m);
 }
 
