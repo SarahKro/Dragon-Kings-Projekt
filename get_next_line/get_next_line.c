@@ -6,11 +6,52 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:54:44 by sizgi             #+#    #+#             */
-/*   Updated: 2024/11/16 14:58:56 by codespace        ###   ########.fr       */
+/*   Updated: 2024/11/16 18:13:26 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+// void	ft_bzero(void *s, size_t n)
+// {
+// 	unsigned char	*ptr;
+
+// 	ptr = s;
+// 	while (n > 0)
+// 	{
+// 		*ptr++ = '\0';
+// 		n--;
+// 	}
+// }
+
+// void	*ft_calloc(size_t nmemb, size_t size)
+// {
+// 	void	*m;
+// 	size_t	product;
+
+// 	if (nmemb != 0 && ((nmemb * size) / nmemb != size))
+// 		return (NULL);
+// 	product = nmemb * size;
+// 	m = malloc(product);
+// 	if (!m)
+// 		return (NULL);
+// 	ft_bzero(m, product);
+// 	return (m);
+// }
+
+// size_t	ft_strlen(const char *s)
+// {
+// 	size_t	i;
+
+// 	if(s == NULL)
+// 		return(0);
+// 	i = 0;
+// 	while (s[i] != '\0')
+// 	{
+// 		i++;
+// 	}
+// 	return (i);
+// }
 
 char	*ft_strjoin(char const *s1, char const *s2, int index, int size)
 {
@@ -61,7 +102,12 @@ char	*get_next_line(int fd)
 
 	line = NULL;
 	if (BUFFER_SIZE <= 0 || fd < 0)
-		return (NULL);
+	{
+		if(remain)
+			free(remain);
+		remain = NULL;
+		return(NULL);
+	}
 	i = new_line_check(remain);
 	if (remain && i > -1)
 	{
@@ -70,30 +116,20 @@ char	*get_next_line(int fd)
 		if(line == NULL)
 		{
 			free(line);
-			if(remain)
-			{
-				free(remain);
-				remain = NULL;
-			}
+			free(remain);
+			remain = NULL;
 			return(NULL);
 		}
-		if (j >= i + 1)
+		if (j > i + 1)
 		{
 			temp = remain;
 			remain = ft_strjoin(NULL, remain, i + 1, j);
+			free(temp);
 			if(remain == NULL)
 			{
 				free(line);
-				if (temp)
-					free(temp);
-				if(remain)
-				{
-					free(remain);
-					remain = NULL;
-				}
 				return(NULL);
 			}
-			free(temp);
 			return (line);
 		}
 		else
@@ -113,7 +149,6 @@ char	*get_next_line(int fd)
 				line = ft_strjoin(line, remain, 0, i);
 				if(line == NULL)
 				{
-					free(line);
 					free(small_buffer);
 					if(remain)
 					{
@@ -128,13 +163,21 @@ char	*get_next_line(int fd)
 		}
 		small_buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 		if (!small_buffer)
+		{
+			if(line)
+				free(line);
 			return (NULL);
+		}
 		bytes_to_read = read(fd, small_buffer, BUFFER_SIZE);
 		if (bytes_to_read < 0)
 		{
 			free(small_buffer);
-			free(remain);
-			remain = NULL;
+			free(line);		//	!!! THIS LINE WAS MISSING !!!
+			if(remain)
+			{
+				free(remain);
+				remain = NULL;
+			}
 			return (NULL);
 		}
 		if ((bytes_to_read == 0) && line)
@@ -147,22 +190,11 @@ char	*get_next_line(int fd)
 		{
 			temp = line;
 			line = ft_strjoin(line, small_buffer, 0, bytes_to_read);
-			if(line == NULL)
-			{
-				free(line);
-				if (temp)
-					free(temp);
-				free(small_buffer);
-				if(remain)
-				{
-					free(remain);
-					remain = NULL;
-				}
-				return(NULL);
-			}
 			if (temp)
 				free(temp);
 			free(small_buffer);
+			if(line == NULL)
+				return(NULL);
 		}
 		else
 		{
@@ -170,15 +202,13 @@ char	*get_next_line(int fd)
 			line = ft_strjoin(line, small_buffer, 0, (i + 1));
 			if(line == NULL)
 			{
-				free(line);
-				if (temp)
-					free(temp);
+				free(temp);
 				free(small_buffer);
-				if(remain)
-				{
-					free(remain);
-					remain = NULL;
-				}
+				// if(remain)
+				// {
+				// 	free(remain);
+				// 	remain = NULL;
+				// }
 				return(NULL);
 			}
 			free(temp);
@@ -189,11 +219,6 @@ char	*get_next_line(int fd)
 				{
 					free(line);
 					free(small_buffer);
-					if(remain)
-					{
-						free(remain);
-						remain = NULL;
-					}
 					return(NULL);
 				}
 			}
@@ -202,30 +227,29 @@ char	*get_next_line(int fd)
 		}
 	}
 	free(line);
-	// free(small_buffer);
 	return (NULL);
 }
 
-int	main(void)
-{
-	int		fd;
-	char	*text_line;
-	int		count;
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*text_line;
+// 	int		count;
 
-	count = 0;
-	fd = open("7", O_RDONLY); // FILE options, open("path/to/file",
-									// O_WRONLY | O_RONLY) flags can be combined
-	//     O_RONLY, O_WONLY, O_RDWR MANDATORY FLAGS.
-	if (fd == -1)
-	{
-		printf("no file");
-		return (0);
-	}
-	while ((text_line = get_next_line(fd)) != NULL)
-	{
-		printf("Line %d: %s", ++count, text_line);
-		free(text_line);
-	}
-	close(fd);
-	return (0);
-}
+// 	count = 0;
+// 	fd = open("read_error.txt", O_RDONLY); // FILE options, open("path/to/file",
+// 									// O_WRONLY | O_RONLY) flags can be combined
+// 	//     O_RONLY, O_WONLY, O_RDWR MANDATORY FLAGS.
+// 	if (fd == -1)
+// 	{
+// 		printf("no file");
+// 		return (0);
+// 	}
+// 	while ((text_line = get_next_line(fd)) != NULL)
+// 	{
+// 		printf("Line %d: %s", ++count, text_line);
+// 		free(text_line);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
