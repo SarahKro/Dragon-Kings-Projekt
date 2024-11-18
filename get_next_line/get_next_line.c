@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:54:44 by sizgi             #+#    #+#             */
-/*   Updated: 2024/11/16 18:13:26 by codespace        ###   ########.fr       */
+/*   Updated: 2024/11/18 11:48:38 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,7 @@ char	*get_next_line(int fd)
 // 	int		count;
 
 // 	count = 0;
-// 	fd = open("read_error.txt", O_RDONLY); // FILE options, open("path/to/file",
+// 	fd = open("7", O_RDONLY); // FILE options, open("path/to/file",
 // 									// O_WRONLY | O_RONLY) flags can be combined
 // 	//     O_RONLY, O_WONLY, O_RDWR MANDATORY FLAGS.
 // 	if (fd == -1)
