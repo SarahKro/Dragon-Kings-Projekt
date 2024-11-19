@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:54:44 by sizgi             #+#    #+#             */
-/*   Updated: 2024/11/18 11:48:38 by codespace        ###   ########.fr       */
+/*   Updated: 2024/11/19 20:16:10 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,26 @@
 // 	return (i);
 // }
 
+char *fail_check(char *s1, char *s2, char *s3)
+{
+	if(!s1 && !s2)
+	{
+		// if(s3)
+			free(s3);
+		s3 = NULL;
+		return(NULL);
+	}
+	else if(!s3)
+	{
+		if(s2)
+			free(s2);
+		if(s1)
+			free(s1);
+		// s3 = NULL;
+		return(NULL);
+	}
+	return(NULL);
+}
 char	*ft_strjoin(char const *s1, char const *s2, int index, int size)
 {
 	int		i;
@@ -97,70 +117,63 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*temp;
 	int			i;
-	int			j;
 	static char	*remain;
 
 	line = NULL;
+	temp = NULL;
 	if (BUFFER_SIZE <= 0 || fd < 0)
+		return (fail_check(temp, line, remain));
+	if (remain)
 	{
-		if(remain)
-			free(remain);
-		remain = NULL;
-		return(NULL);
-	}
-	i = new_line_check(remain);
-	if (remain && i > -1)
-	{
-		j = ft_strlen(remain);
-		line = ft_strjoin(NULL, remain, 0, i + 1);
-		if(line == NULL)
+		i = new_line_check(remain);
+		bytes_to_read = ft_strlen(remain);
+		if (i > -1)
 		{
-			free(line);
-			free(remain);
-			remain = NULL;
-			return(NULL);
-		}
-		if (j > i + 1)
-		{
-			temp = remain;
-			remain = ft_strjoin(NULL, remain, i + 1, j);
-			free(temp);
-			if(remain == NULL)
+			line = ft_strjoin(NULL, remain, 0, i + 1);
+			if(!line && !temp)
 			{
-				free(line);
+				// return (fail_check(temp, line, remain));
+				free(remain);
+				remain = NULL;
 				return(NULL);
 			}
-			return (line);
+			if (bytes_to_read > i + 1)
+			{
+				temp = remain;
+				remain = ft_strjoin(NULL, remain, i + 1, bytes_to_read);
+				free(temp);
+				if(!remain)
+				{
+					free(line);
+					// remain = NULL;
+					return(NULL);
+					// return (fail_check(temp, line, remain));
+				}
+
+			}
+			else
+			{
+				free(remain);
+				remain = NULL;
+			}
+			return(line);
 		}
 		else
 		{
-			free(remain);
-			remain = NULL;
+			line = ft_strjoin(line, remain, 0, bytes_to_read);
+			if(!line)
+			{
+				free(remain);
+				remain = NULL;
+				// return (fail_check(temp, line, remain));
+			}
 		}
+		free(remain);
+		remain = NULL;
 	}
 	bytes_to_read = 1;
 	while (bytes_to_read > 0)
 	{
-		if (remain)
-		{
-			i = ft_strlen(remain);
-			if (i > 0)
-			{
-				line = ft_strjoin(line, remain, 0, i);
-				if(line == NULL)
-				{
-					free(small_buffer);
-					if(remain)
-					{
-						free(remain);
-						remain = NULL;
-					}
-					return(NULL);
-				}
-			}
-			free(remain);
-			remain = NULL;
-		}
 		small_buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 		if (!small_buffer)
 		{
@@ -171,14 +184,11 @@ char	*get_next_line(int fd)
 		bytes_to_read = read(fd, small_buffer, BUFFER_SIZE);
 		if (bytes_to_read < 0)
 		{
-			free(small_buffer);
-			free(line);		//	!!! THIS LINE WAS MISSING !!!
-			if(remain)
-			{
-				free(remain);
-				remain = NULL;
-			}
-			return (NULL);
+			// free(small_buffer);
+			// if(line)
+			// 	free(line);		//	!!! THIS LINE WAS MISSING !!!
+			// remain = NULL;
+			return (fail_check(small_buffer, line, remain));
 		}
 		if ((bytes_to_read == 0) && line)
 		{
@@ -189,27 +199,21 @@ char	*get_next_line(int fd)
 		if (i < 0)
 		{
 			temp = line;
-			line = ft_strjoin(line, small_buffer, 0, bytes_to_read);
-			if (temp)
-				free(temp);
+			line = ft_strjoin(temp, small_buffer, 0, bytes_to_read);
 			free(small_buffer);
-			if(line == NULL)
+			free(temp);
+			if(!line)
 				return(NULL);
 		}
 		else
 		{
 			temp = line;
 			line = ft_strjoin(line, small_buffer, 0, (i + 1));
-			if(line == NULL)
+			if(!line)
 			{
-				free(temp);
-				free(small_buffer);
-				// if(remain)
-				// {
-				// 	free(remain);
-				// 	remain = NULL;
-				// }
-				return(NULL);
+				// free(temp);
+				// free(small_buffer);
+				return(fail_check(temp, small_buffer, line));
 			}
 			free(temp);
 			if (i + 1 < bytes_to_read)

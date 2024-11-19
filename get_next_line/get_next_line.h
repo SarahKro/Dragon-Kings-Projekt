@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sizgi <sizgi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 12:24:30 by sizgi             #+#    #+#             */
-/*   Updated: 2024/11/15 19:38:21 by sizgi            ###   ########.fr       */
+/*   Updated: 2024/11/19 18:27:38 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 # define Get_next_line_H
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 3
+# define BUFFER_SIZE 10
 #endif
 
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
-
+char    *fail_check(char *s1, char *s2, char *s3);
 char	*ft_strjoin(char const *s1, char const *s2, int size, int index);
 char	*get_next_line(int fd);
 void	*ft_calloc(size_t nmemb, size_t size);
