@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 18:08:16 by sizgi             #+#    #+#             */
-/*   Updated: 2024/10/10 11:03:25 by codespace        ###   ########.fr       */
+/*   Updated: 2024/11/20 13:26:22 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ int	ft_putnbr_hexa_Upper(unsigned int n)
 	save = i;
 	i-=1;
 	while (i >= 0)
-	{
-		write(1, &str[i], 1);
-		i--;
-	}
+		write(1, &str[i--], 1);
 	return (save);
 }
 

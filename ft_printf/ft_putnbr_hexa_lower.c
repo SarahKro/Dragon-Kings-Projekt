@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 18:47:11 by sizgi             #+#    #+#             */
-/*   Updated: 2024/10/10 10:59:21 by codespace        ###   ########.fr       */
+/*   Updated: 2024/11/20 13:26:04 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,6 @@ int	ft_putnbr_hexa_lower(unsigned int n)
     save = i;
     i -= 1;
     while (i >= 0)
-    {
-        write(1, &str[i], 1);
-        i--;
-    }
+        write(1, &str[i--], 1);
     return (save);
 }
