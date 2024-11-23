@@ -3,47 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: krh <krh@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 15:06:07 by sizgi             #+#    #+#             */
-/*   Updated: 2024/11/23 21:12:19 by krh              ###   ########.fr       */
+/*   Updated: 2024/11/15 19:45:51 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	new_line_check(char *small_buffer)
+void	ft_bzero(void *s, size_t n)
 {
-	int	i;
+	unsigned char	*ptr;
 
-	i = 0;
-	while (small_buffer && small_buffer[i] != '\0')
+	ptr = s;
+	while (n > 0)
 	{
-		if (small_buffer[i] == '\n')
-			return (i);
-		i++;
+		*ptr++ = '\0';
+		n--;
 	}
-	return (-1);
 }
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
-	size_t			sum;
-	void			*m;
-	unsigned char	*ptr;
+	void	*m;
+	size_t	product;
 
 	if (nmemb != 0 && ((nmemb * size) / nmemb != size))
 		return (NULL);
-	sum = nmemb * size;
-	m = malloc(sum);
+	product = nmemb * size;
+	m = malloc(product);
 	if (!m)
 		return (NULL);
-	ptr = m;
-	while (sum > 0)
-	{
-		*ptr++ = '\0';
-		sum--;
-	}
+	ft_bzero(m, product);
 	return (m);
 }
 
@@ -51,8 +43,8 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
-	if (s == NULL)
-		return (0);
+	if(s == NULL)
+		return(0);
 	i = 0;
 	while (s[i] != '\0')
 	{
@@ -60,36 +52,24 @@ size_t	ft_strlen(const char *s)
 	}
 	return (i);
 }
-
-char	*ft_strjoin(char const *s1, char const *s2, int index, int size)
+char	*ft_strdup(const char *s)
 {
 	int		i;
+	int		j;
 	char	*m;
 
-	if (s1 == NULL && s2 == NULL)
-		return (NULL);
-	i = ft_strlen(s1);
-	m = ft_calloc((i + size + 1), sizeof(char));
-	if (!m)
-		return (NULL);
+	j = 0;
 	i = 0;
-	while (s1 != NULL && s1[i] != '\0')
-	{
-		m[i] = s1[i];
+	while (s[i] != '\0')
 		i++;
+	m = malloc((i + 1) * sizeof(char));
+	if (!m)
+		return (0);
+	while (s[j] != '\0')
+	{
+		m[j] = s[j];
+		j++;
 	}
-	while (s2 != NULL && s2[index] != '\0' && index < size)
-		m[i++] = s2[index++];
-	m[i] = '\0';
+	m[j] = '\0';
 	return (m);
-}
-
-char	*fail_check(char *s1, char *s2)
-{
-	if (s1)
-		free(s1);
-	if (s2)
-		free(s2);
-	s2 = NULL;
-	return (NULL);
 }
