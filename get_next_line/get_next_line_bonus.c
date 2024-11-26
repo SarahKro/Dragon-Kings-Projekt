@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 19:54:44 by sizgi             #+#    #+#             */
-/*   Updated: 2024/11/26 18:30:17 by codespace        ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "get_next_line.h"
 
 static char	*remaining_check(char **remaining, char *line, int i)
@@ -116,47 +104,23 @@ char	*get_next_line(int fd)
 	int			bytes_to_read;
 	char		*line;
 	int			index;
-	static char	*remaining;
+	static char	*remaining[1045876];
 	
 	line = NULL;
 	bytes_to_read = 0;
 	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
-	index = new_line_check(remaining);
-	if (remaining && index > -1)
-		return (remaining_check(&remaining, line, index));
-	else if (remaining)
+	index = new_line_check(remaining[fd]);
+	if (remaining[fd] && index > -1)
+		return (remaining_check(&remaining[fd], line, index));
+	else if (remaining[fd])
 	{
-		bytes_to_read = ft_strlen(remaining);
-		line = ft_strjoin(line, remaining, 0, bytes_to_read);
+		bytes_to_read = ft_strlen(remaining[fd]);
+		line = ft_strjoin(line, remaining[fd], 0, bytes_to_read);
 		if (!line)
-			return (fail_check(NULL, &remaining));
-		free(remaining);
-		remaining = NULL;
+			return (fail_check(NULL, &remaining[fd]));
+		free(remaining[fd]);
+		remaining[fd] = NULL;
 	}
-	return (line_reader(line, bytes_to_read, fd, &remaining));
+	return (line_reader(line, bytes_to_read, fd, &remaining[fd]));
 }
-
-/* int	main(void)
-{
-	int		fd;
-	char	*text_line;
-	int		count;
-
-	count = 0;
-	// text_line = get_next_line(0);
-	// printf("%s", text_line);
-	fd = open("3.txt", O_RDONLY);
-	if (fd == -1)
-	{
-		printf("no file");
-		return (0);
-	}
-	while ((text_line = get_next_line(fd)) != NULL)
-	{
-		printf("Line %d: %s", ++count, text_line);
-		free(text_line);
-	}
-	close(fd);
-	return (0);
-} */
